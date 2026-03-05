@@ -458,9 +458,11 @@ def main(
         if newload:
             digits = "".join(ch for ch in file if ch.isdigit())
             video_name = "0" + digits[:3]
-            print("DEBUG: video_name", video_name)
+            # print("DEBUG: video_name", video_name)
         else:
-            video_name = file.split("_")[0]
+            digits = "".join(ch for ch in file if ch.isdigit())
+            video_name = digits[:4]            
+            # video_name = file.split("_")[0]
 
         video_path = os.path.join(input_folder, f"{video_name}.mp4")
 

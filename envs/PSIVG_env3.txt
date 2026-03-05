@@ -35,3 +35,9 @@ icecream==2.1.4
 matplotlib==3.8.4
 wandb==0.20.1
 
+
+ffmpeg-python==0.2.0
+py3nvml==0.2.7
+rich==14.3.3
+
+tiktoken==0.12.0

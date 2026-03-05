@@ -43,7 +43,7 @@ def main():
             )
             continue
 
-        base_parts = line.split("_")
+        base_parts = line.split("/")
         base_name = base_parts[0]
         prompt_index = index
 

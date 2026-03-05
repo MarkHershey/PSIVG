@@ -19,7 +19,7 @@ PRETRAINED_URLS = [
     "https://huggingface.co/Eyeline-Labs/Go-with-the-Flow/resolve/main/I2V5B_final_i38800_nearest_lora_weights.safetensors",
 ]
 
-COGVIDEO_URL = "https://huggingface.co/zai-org/CogVideoX-5b-I2V"
+cogvideo_repo_id = "THUDM/CogVideoX-5b-I2V"
 
 SUPERGLUE_URLS = [
     "https://github.com/magicleap/SuperGluePretrainedNetwork/raw/refs/heads/master/models/weights/superglue_indoor.pth",
@@ -73,7 +73,19 @@ def clone_repo(
         print(f"[dry-run] Clone {url} -> {destination}")
         return
     print(f"Cloning {url}")
-    subprocess.run(["git", "clone", url, str(destination)], check=True)
+    if "huggingface.co" in url:
+        try:
+            from huggingface_hub import snapshot_download
+        except ImportError:
+            print("Error: 'huggingface_hub' is missing but required to download HF models without git-lfs.")
+            print("Please run `pip install huggingface_hub` and try again.")
+            sys.exit(1)
+        
+        repo_id = "/".join(url.rstrip("/").split("/")[-2:])
+        print(f"Using huggingface_hub to download {repo_id}...")
+        snapshot_download(repo_id=repo_id, local_dir=str(destination), local_dir_use_symlinks=False)
+    else:
+        subprocess.run(["git", "clone", url, str(destination)], check=True)
     print(f"Cloned: {destination}")
 
 
@@ -105,6 +117,21 @@ def extract_zip(
     print(f"Extracted: {zip_path} -> {extract_to}")
 
 
+def download_cogvideo_model(repo_id: str, destination: Path) -> None:
+    print(f"Downloading {repo_id} to {destination}...")
+    try:
+        from huggingface_hub import snapshot_download
+        snapshot_download(
+            repo_id=repo_id,
+            local_dir=str(destination),
+            local_dir_use_symlinks=False
+        )
+    except ImportError:
+        print("Error: 'huggingface_hub' is missing but required to download HF models without git-lfs.")
+        print("Please run `pip install huggingface_hub` and try again.")
+        sys.exit(1)
+
+
 def main() -> int:
     repo_root = Path(__file__).resolve().parent.parent
     pretrained_dir = repo_root / "pretrained_models"
@@ -124,7 +151,9 @@ def main() -> int:
         out_name = filename_from_url(url)
         download_file(url, pretrained_dir / out_name)
 
-    clone_repo(COGVIDEO_URL, pretrained_dir / "CogVideoX-5b-I2V")
+    
+    cogvideo_destination = pretrained_dir / "CogVideoX-5b-I2V"
+    download_cogvideo_model(cogvideo_repo_id, cogvideo_destination)
 
     print("Done.")
     return 0

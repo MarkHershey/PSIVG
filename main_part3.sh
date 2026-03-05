@@ -4,44 +4,66 @@ mamba activate PSIVG_env3
 
 ### This script processes the data from the perception pipeline to the dataset for videogen
 
-export USE_MOVING_CAMERA="true"
-# export USE_MOVING_CAMERA="false"
+VIDEO_ID="0009"
 
-FOLDER_NAME="data_root"
+USE_MOVING_CAMERA="true"
+
+
+
 
 #### prepared inputs
-SELECTED_VIDS="${FOLDER_NAME}/OUT_Flow/selected/selected_examples.txt"
-PROMPT_FILE="${FOLDER_NAME}/INPUT_DATA/Prompts/0009.txt"  
-PROMPT_FG_FILE="${FOLDER_NAME}/INPUT_DATA/Prompts/0009_fg.txt"  
+FOLDER_NAME="data_root"
+SELECTED_VIDS="${FOLDER_NAME}/OUT_Flow/rendering_path/${VIDEO_ID}.txt"
+PROMPT_FILE="${FOLDER_NAME}/INPUT_DATA/Prompts/${VIDEO_ID}.txt"  
+PROMPT_FG_FILE="${FOLDER_NAME}/INPUT_DATA/Prompts/${VIDEO_ID}_fg.txt"  
 
-
-### TODO. check if this path to the first frame is correct
-IMAGE_FOLDER="${FOLDER_NAME}/INPUT_DATA/Frames"
 RENDER_DATA_FOLDER="${FOLDER_NAME}/OUT_Rendering"
-
-
 TEMPLATE_VIDEO_FOLDER="${FOLDER_NAME}/INPUT_DATA/Videos"
 
-#### output directories
+#### intermediate output directories
 OUTPUT_DIR="${FOLDER_NAME}/OUT_Flow/computed_noises" 
 MASK_FIRSTFRAME_FOLDER="${FOLDER_NAME}/OUT_Flow/segmaps_firstframe/masks_npy"
 OUTPUT_SEGMENTATION_DIR_IMAGES="${FOLDER_NAME}/OUT_Flow/segmaps_firstframe"
+IMAGE_FOLDER="${FOLDER_NAME}/OUT_Flow/Firstframe_PNG"
 
+#### final dataset output directory
 OUTPUT_DATASET_DIR="${FOLDER_NAME}/datasets/generated_data_example"
+
+
+
+#### first, automatically find the latest rendering run folder
+# Find the name of the folder with the latest date
+rendering_path_file="${RENDER_DATA_FOLDER}/${VIDEO_ID}"
+latest_run_folder=$(find "${rendering_path_file}" -mindepth 1 -maxdepth 1 -type d -name "*_run" | sort -r | head -n 1)
+folder_name=$(basename "${latest_run_folder}")
+
+# Create the directory for SELECTED_VIDS if it does not exist
+mkdir -p "$(dirname "${SELECTED_VIDS}")"
+
+# Create a txt file at SELECTED_VIDS, where the first line is ${VIDEO_ID}/folder_name
+echo "${VIDEO_ID}/${folder_name}/original_length" > "${SELECTED_VIDS}"
+
+echo "Currently reading rendering data from ${RENDER_DATA_FOLDER}/${VIDEO_ID}/${folder_name}"
+
+
+### convert the first frame to png, which is required by the subsequent segmentation code
+FIRST_FRAME_PATH="${FOLDER_NAME}/INPUT_DATA/Frames/${VIDEO_ID}/00000.jpg"
+mkdir -p "${IMAGE_FOLDER}"
+python -c "from PIL import Image; Image.open('${FIRST_FRAME_PATH}').save('${IMAGE_FOLDER}/${VIDEO_ID}.png')"
+
+
 
 # To segment static images (first frames) using LangSAM (filter by selected videos and prompts)
 mamba deactivate
 mamba activate langsam
-IMAGE_DIR="${IMAGE_FOLDER}"
-SELECTED_VIDEOS_FILE="${SELECTED_VIDS}"
 
 echo "Starting image segmentation..."
-echo "Image dir: ${IMAGE_DIR}"
+echo "Image dir: ${IMAGE_FOLDER}"
 echo "Output dir: ${OUTPUT_SEGMENTATION_DIR_IMAGES}"
 python psivg/utils/segment_frames.py \
-  --image_dir ${IMAGE_DIR} \
+  --image_dir ${IMAGE_FOLDER} \
   --output_dir ${OUTPUT_SEGMENTATION_DIR_IMAGES} \
-  --selected_videos ${SELECTED_VIDEOS_FILE} \
+  --selected_videos ${SELECTED_VIDS} \
   --text_prompts ${PROMPT_FG_FILE}
 echo "Image segmentation completed!"
 
@@ -61,7 +83,7 @@ python psivg/utils/make_warped_noise.py \
 echo "Warped noise completed!"
 
 
-#to generate the pixel correspondences
+# to generate the pixel correspondences
 python psivg/utils/process_pixel_correspondences.py \
     --selected_vids_file ${SELECTED_VIDS} \
     --input_folder ${RENDER_DATA_FOLDER} \
