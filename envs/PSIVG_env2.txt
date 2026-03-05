@@ -1,0 +1,36 @@
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.7.0+cu128
+torchvision
+ninja
+
+rich
+trimesh
+viser
+python-dotenv
+openai
+opencv-python
+numpy
+taichi
+tqdm
+PyYAML
+open3d
+plyfile
+einops
+omegaconf
+click
+rerun-sdk
+imageio[ffmpeg]
+matplotlib
+python-pycg
+timm
+transformers>=4.25,<5
+gdown
+OpenEXR<3.3.0
+kornia
+hydra-core
+ray
+arrgh
+mitsuba
+
+# for server-side setup to work smoothly
+setuptools<70.0.0

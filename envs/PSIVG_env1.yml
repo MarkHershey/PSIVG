@@ -1,0 +1,13 @@
+name: PSIVG_env1
+channels:
+  - nvidia/label/cuda-11.8.0
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - gcc=11
+  - gxx=11
+  - ninja
+  - cuda-toolkit=11.8
+  - pip:
+      - -r PSIVG_env1.txt

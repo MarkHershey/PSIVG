@@ -1,0 +1,37 @@
+### Combined environment requirements
+### CUDA 11.8 PyTorch wheels
+--extra-index-url https://download.pytorch.org/whl/cu118
+
+# Core runtime
+rp==0.1.1287
+torch==2.7.1+cu118
+torchvision==0.22.1+cu118
+torchao==0.11.0
+numpy==2.2.6
+
+# Generative AI stack
+diffusers==0.35.0
+transformers==4.53.0
+accelerate==1.12.0
+huggingface_hub==0.34.0
+hf_transfer==0.1.9
+peft==0.17.0
+bitsandbytes==0.46.0
+sentencepiece==0.2.0
+
+# Data / video / CV
+opencv-contrib-python==4.11.0.86
+decord==0.6.0
+imageio==2.37.0
+imageio-ffmpeg==0.6.0
+moviepy==1.0.3
+pandas==2.3.0
+einops==0.8.1
+easydict==1.13
+
+# Utilities / logging / plotting
+fire==0.7.0
+icecream==2.1.4
+matplotlib==3.8.4
+wandb==0.20.1
+
