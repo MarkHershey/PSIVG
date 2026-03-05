@@ -97,7 +97,10 @@ We need two input files to start the pipeline:
 1. A generated template video file `PATH/TO/XXXX.mp4`
 2. A metadata file `PATH/TO/XXXX.json`
 
-Note that `XXXX` must be a 4-digit number and will be used as the sample ID for the pipeline.
+To generate the template video, you can use any text-to-video model, e.g., [HunyuanVideo](https://huggingface.co/TencentARC/HunyuanVideo). You can also first use a text-to-image model to generate a single image, and then use a video generation model to generate a video from the image, e.g., [CogVideoX](https://huggingface.co/zai-org/CogVideoX-5b-I2V). In general, using newer and more recent video generation models often will lead to better results.
+Our code assumes the videos are 49 frames, and with frames of size 480 x 720, following Go-with-the-FLow.
+
+Note that, for the naming, `XXXX` must be a 4-digit number and will be used as the sample ID for the pipeline.
 
 The metadata file should be in the same directory as the template video file, and be a JSON file with the following structure:
 
@@ -121,15 +124,18 @@ In the following steps, we will use the `assets/0009.mp4` as the demo template v
 
 ```bash
 conda activate PSIVG_env1
-CUDA_VISIBLE_DEVICES=0 python3 main_part1.py --video assets/0031.mp4
+CUDA_VISIBLE_DEVICES=0 python3 main_part1.py --video assets/0009.mp4
 ```
+
+The output data will be saved in `data_root/OUT_Perception/0009`.
+Intermediate data will also be saved in `data_root/INPUT_DATA/0009`.
 
 ### Step 2:
 
 ```bash
 conda deactivate
 conda activate PSIVG_env2
-CUDA_VISIBLE_DEVICES=0 python3 main_part2.py --video "0031"
+CUDA_VISIBLE_DEVICES=0 python3 main_part2.py --video "0009"
 ```
 
 ### Step 3:
@@ -140,6 +146,8 @@ conda activate PSIVG_env3
 ./main_part3.sh
 ```
 
+After this step, the dataset should be prepared in `data_root/datasets/generated_data_example/0009`.
+
 ### Step 4:
 
 ```bash
@@ -149,3 +157,7 @@ conda activate PSIVG_env3
 Note that, by default, we assume that the input video uses a moving camera. If the input video uses a static camera, please set `USE_MOVING_CAMERA="false"` in `main_part3.sh` and `main_part4.sh`, which makes the method more resistant to noise in the background.
 
 By default, we also turn TTCO off, since it requires more compute and also requires a lot more memory (e.g., we ran our code on a single H100 GPU). If you want to turn TTCO on, please set `USE_TTCO="true"` in `main_part4.sh`. TTCO usually helps more for challenging scenes, e.g., when the objects or camera are moving fast.
+
+## Tips for Running the Pipeline
+
+Here are some tips to help you get better videos when running the pipeline. Firstly, it may be helpful if the videos contain larger objects, and if the objects are not occluded in the first frame. If you want to do it at scale, it is advised to write a script to filter out template videos that do not contain the object, or scenes with highly erratic motion at the start which may affect the perception part.
