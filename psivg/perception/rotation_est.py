@@ -53,15 +53,20 @@ def get_object_rotation(sample_id: str) -> str:
     )
     # print(f"all_exists: {all_exists}")
     if all_exists:
-        list_of_matches = _matcher(
-            frame_0_jpg_path,
-            frame_5_jpg_path,
-            frame_0_mask_path,
-            frame_5_mask_path,
-            output_dir=C.OUT_PERCEPTION_DIR / sample_id / "rot_est",
-            verbose=False,
-        )
-        result = _estimate_rotation(list_of_matches)
+        try:
+            list_of_matches = _matcher(
+                frame_0_jpg_path,
+                frame_5_jpg_path,
+                frame_0_mask_path,
+                frame_5_mask_path,
+                output_dir=C.OUT_PERCEPTION_DIR / sample_id / "rot_est",
+                verbose=False,
+            )
+            result = _estimate_rotation(list_of_matches)
+        except Exception as e:
+            print(f"Error in _matcher: {e}")
+            result = "None"
+
     else:
         result = "None"
 

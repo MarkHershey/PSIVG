@@ -49,9 +49,18 @@ _**Disclaimer**: This repository offers a reference implementation of the pipeli
 
 This project is released under the [Apache 2.0 License](LICENSE).
 
-<!-- ## BibTeX
+## BibTeX
 
 ```bibtex
+@article{foo2026physical, 
+  title={Physical Simulator In-the-Loop Video Generation}, 
+  author={Foo, Lin Geng and Huang, Mark He and Lattas, Alexandros and Moschoglou, Stylianos and Beeler, Thabo and Theobalt, Christian}, 
+  journal={arXiv preprint arXiv:2603.06408}, 
+  year={2026} 
+}
+```
+
+<!-- ```
 @InProceedings{Foo_2026_CVPR,
   title={Physical Simulator In-the-Loop Video Generation},
   author={Foo, Lin Geng and Huang, Mark He and Lattas, Alexandros and Moschoglou, Stylianos and Beeler, Thabo and Theobalt, Christian},
