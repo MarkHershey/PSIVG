@@ -1,5 +1,5 @@
 {
-    "video_prompt": "A bright orange basketball bounces in the air on a concrete playground surrounded by a wire fence. The scene is realistic and well-lit.",
-    "fg_prompt": "bright orange basketball",
-    "primary": "basketball"
+    "video_prompt": "A soccer ball with a classic black-and-white pattern is in midair, bouncing on a cobblestone street in a quiet village. There are no humans. The scene is realistic, camera is moving around.",
+    "fg_prompt": "soccer ball with a classic black-and-white pattern",
+    "primary": "ball"
 }
