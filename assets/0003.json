@@ -1,0 +1,5 @@
+{
+    "video_prompt": "A green apple is in midair, descending onto a rustic wooden table in a sunny orchard with rows of apple trees in the background. There are no humans. The scene is realistic, with good lighting and no camera movement.",
+    "fg_prompt": "green apple",
+    "primary": "apple"
+}

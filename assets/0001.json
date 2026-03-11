@@ -1,0 +1,5 @@
+{
+    "video_prompt": "A yellow tennis ball is in midair, bouncing on a tennis court. There are no humans. The scene is realistic, with good lighting and no camera movement.",
+    "fg_prompt": "yellow tennis ball",
+    "primary": "ball"
+}
