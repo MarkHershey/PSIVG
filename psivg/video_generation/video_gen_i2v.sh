@@ -43,7 +43,7 @@ for video_id in "${VIDEO_IDS[@]}"; do
     --validation_prompt_separator ::: \
     --num_validation_videos 1 \
     --validation_epochs $VALIDATION_EPOCHS \
-    --seed 15100 \
+    --seed 1 \
     --rank $RANK \
     --lora_alpha $LORA_ALPHA \
     --lora_weights_path $LORA_WEIGHTS_PATH \

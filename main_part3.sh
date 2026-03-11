@@ -4,7 +4,7 @@ mamba activate PSIVG_env3
 
 ### This script processes the data from the perception pipeline to the dataset for videogen
 
-VIDEO_ID="0009"
+VIDEO_ID="0000"
 
 USE_MOVING_CAMERA="true"
 
@@ -151,13 +151,6 @@ python psivg/utils/transfer_to_dataset.py  \
   --with_correspondences  \
   ${TRANSFER_FLAGS}
 echo "Transfer outputs to dataset completed!"
-
-
-
-#### for interactive session, for a100 and for h100
-### srun -p gpu22 --pty --gres gpu:1 -t 1:00:00  /bin/bash
-### srun -p gpu22 --pty --gres gpu:a100:1 -t 1:00:00  /bin/bash
-### srun -p gpu24 --pty --gres gpu:h100:1 -t 1:00:00  /bin/bash
 
 
 

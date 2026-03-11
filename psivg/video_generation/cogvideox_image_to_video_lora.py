@@ -139,7 +139,7 @@ def log_validation(
                     .replace("/", "_")
                 )
                 filename = os.path.join(output_dir_videoid, f"{phase_name}_video_{i}_{prompt}.mp4")
-                export_to_video(video, filename, fps=8)
+                export_to_video(video, filename, fps=15)
                 video_filenames.append(filename)
 
             tracker.log(
@@ -857,7 +857,7 @@ def main(args):
             val_epoch_path = os.path.join(output_dir_videoid, "validation_once")
             os.makedirs(val_epoch_path, exist_ok=True)
             mp4_path = os.path.join(val_epoch_path, base_name + ".mp4")
-            export_to_video(video, mp4_path, fps=8)
+            export_to_video(video, mp4_path, fps=15)
             print(f"Saved one-off validation video as mp4 to {mp4_path}")
 
             reset_memory(accelerator.device)
@@ -1238,7 +1238,7 @@ def main(args):
 
                 # Also save as mp4 for visualization
                 mp4_path = os.path.join(val_epoch_path, base_name + ".mp4")
-                export_to_video(video, mp4_path, fps=8)
+                export_to_video(video, mp4_path, fps=15)
                 print(f"Saved validation video as mp4 to {mp4_path}")
 
                 reset_memory(accelerator.device)
