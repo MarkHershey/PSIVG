@@ -153,7 +153,7 @@ conda activate PSIVG_env3
 
 <!-- During this step, you may be prompted to download additional python packages when they are required. If so, please follow the instructions. The installation for each package should be automated and should only happen the first time the script is run. -->
 
-After this step, the dataset that will be used in the video generation stepshould be prepared in `data_root/datasets/generated_data_example/0000`.
+After this step, the dataset that will be used in the video generation step should be prepared in `data_root/datasets/generated_data_example/0000`.
 
 
 ### Step 4:
@@ -162,10 +162,12 @@ After this step, the dataset that will be used in the video generation stepshoul
 ./main_part4.sh
 ```
 
+After this step, the final generated video will be saved in `outputs/generated_data_example/expt_LRcosine_lr0.0002_iter50/0000`.
+
 Note that, by default, we assume that the input video uses a moving camera. If the input video uses a static camera, please set `USE_MOVING_CAMERA="false"` in `main_part3.sh` and `main_part4.sh`, which makes the method more resistant to noise in the background.
 
-By default, we also turn TTCO off, since it requires more compute and also requires a lot more memory (e.g., we ran our code on a single H100 GPU). If you want to turn TTCO on, please set `USE_TTCO="true"` in `main_part4.sh`. TTCO usually helps more for challenging scenes, e.g., when the objects or camera are moving fast. If the resulting videos contain a lot of textural artifacts even with TTCO, it may be helpful to try a slower movement/simulation.
-For instance, in the provided example assets, 0002.mp4 and 0003.mp4 produce substantially worse results when TTCO is turned off.
+By default, we also turn TTCO off, since it requires more compute and also requires a lot more memory (e.g., we ran our code on a single H100 GPU). If you want to turn TTCO on, please set `USE_TTCO="true"` in `main_part4.sh`. TTCO usually helps more for challenging scenes, e.g., when the objects or camera are moving fast. For instance, in the provided example assets, 0002.mp4 and 0003.mp4 produce substantially worse results when TTCO is turned off.
+
 
 
 
@@ -178,5 +180,7 @@ If you want to do such generation at scale, it is also advised to write a script
 In our code, we do not assume that an OpenAI API key is available. We have instead implemented a default setting which allows for running of the code without the use of the OpenAI API. If you want to try using the GPT-5 model for physical properties estimation, you can set the API key as `OPENROUTER_API_KEY` in the environment.
 
 If your template video has very quick camera motion, you may need to adjust the `FLOW_THRESHOLD` in `main_part3.sh` to a larger value. By default, we set it as 2.0 which works well for us, but adjusting it to a larger value will allow larger camera movements, instead of being filtered out as noise.
+
+If the resulting videos contain a lot of textural artifacts even with TTCO, it may be helpful to try a slower movement/simulation.
 
 In our code, we chose to use CPU by default for running the simulations with MPM since we found that it is more stable than running on GPU. If you want to speed up the simulation, you can also try changing the device to use the GPU instead. As a safety measure in case the simulation crashes (which happens occasionally on certain machines), we set a timeout, such that the crashed simulation can be automatically resetted after a certain amount of time, e.g., `CUDA_VISIBLE_DEVICES=0 timeout -s SIGKILL 20m python3 main_part2.py --video "0000"`. 
