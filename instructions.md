@@ -166,7 +166,7 @@ After this step, the final generated video will be saved in `outputs/generated_d
 
 Note that, by default, we assume that the input video uses a moving camera. If the input video uses a static camera, please set `USE_MOVING_CAMERA="false"` in `main_part3.sh` and `main_part4.sh`, which makes the method more resistant to noise in the background.
 
-By default, we also turn TTCO off, since it requires more compute and also requires a lot more memory (e.g., we ran our code on a single H100 GPU). If you want to turn TTCO on, please set `USE_TTCO="true"` in `main_part4.sh`. TTCO usually helps more for challenging scenes, e.g., when the objects or camera are moving fast. For instance, in the provided example assets, 0002.mp4 and 0003.mp4 produce substantially worse results when TTCO is turned off.
+By default, we also turn TTCO off, since it requires more compute and also requires a lot more memory (e.g., we ran our code on a single H100 GPU). If you want to turn TTCO on, please set `USE_TTCO="true"` in `main_part4.sh`. TTCO usually helps more for challenging scenes, e.g., when the objects or camera are moving fast. For instance, in the provided example assets, 0002.mp4 and 0003.mp4 produce substantially worse results when TTCO is turned off during our evaluation.
 
 
 
