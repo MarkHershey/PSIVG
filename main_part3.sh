@@ -8,8 +8,7 @@ VIDEO_ID="0000"
 
 USE_MOVING_CAMERA="true"
 
-
-
+FLOW_THRESHOLD=2.0
 
 #### prepared inputs
 FOLDER_NAME="data_root"
@@ -127,7 +126,7 @@ if [ "$USE_MOVING_CAMERA" = "true" ]; then
 
     python psivg/utils/merge_flows_noises.py \
       --input_dir ${OUTPUT_DIR} \
-      --flow_threshold 2.0  \
+      --flow_threshold ${FLOW_THRESHOLD}  \
       --selected_vids_file ${SELECTED_VIDS}  
     echo "Merged flows and generated merged noise completed!"
 
