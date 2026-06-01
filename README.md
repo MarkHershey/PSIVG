@@ -37,7 +37,7 @@
 
 <br>
 
-[[Project Page]](https://vcai.mpi-inf.mpg.de/projects/PSIVG/) | [[Paper]](https://arxiv.org/abs/2603.06408)
+[[Project Page]](https://vcai.mpi-inf.mpg.de/projects/PSIVG/) | [[Paper]](https://arxiv.org/abs/2603.06408) | [[Video]]([https://arxiv.org/abs/2603.06408](https://www.youtube.com/watch?v=AqneAlYzEAs))
 
 ![](assets/fig1.jpg)
 
@@ -54,15 +54,23 @@ This project is released under the [Apache 2.0 License](LICENSE).
 ## BibTeX
 
 ```bibtex
+@InProceedings{Foo_2026_CVPR,
+    author    = {Foo, Lin Geng and Huang, Mark He and Lattas, Alexandros and Moschoglou, Stylianos and Beeler, Thabo and Theobalt, Christian},
+    title     = {Physical Simulator In-the-Loop Video Generation},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2026},
+    pages     = {4301-4311}
+}
+```
+
+<!-- ```
 @article{foo2026physical, 
   title={Physical Simulator In-the-Loop Video Generation}, 
   author={Foo, Lin Geng and Huang, Mark He and Lattas, Alexandros and Moschoglou, Stylianos and Beeler, Thabo and Theobalt, Christian}, 
   journal={arXiv preprint arXiv:2603.06408}, 
   year={2026} 
 }
-```
-
-<!-- ```
 @InProceedings{Foo_2026_CVPR,
   title={Physical Simulator In-the-Loop Video Generation},
   author={Foo, Lin Geng and Huang, Mark He and Lattas, Alexandros and Moschoglou, Stylianos and Beeler, Thabo and Theobalt, Christian},
