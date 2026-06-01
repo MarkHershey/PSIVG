@@ -37,7 +37,7 @@
 
 <br>
 
-[[Project Page]](https://vcai.mpi-inf.mpg.de/projects/PSIVG/) | [[Paper]](https://arxiv.org/abs/2603.06408) | [[Video]]([https://arxiv.org/abs/2603.06408](https://www.youtube.com/watch?v=AqneAlYzEAs))
+[[Project Page]](https://vcai.mpi-inf.mpg.de/projects/PSIVG/) | [[Paper]](https://arxiv.org/abs/2603.06408) | [[Video]]([https://www.youtube.com/watch?v=AqneAlYzEAs])
 
 ![](assets/fig1.jpg)
 
